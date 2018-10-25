@@ -23,7 +23,7 @@ public class KeyboardSpyInfo: NSObject {
 
     public private(set) var beginFrame: CGRect!
     public private(set) var endFrame: CGRect!
-    public private(set) var animationCurve: UIViewAnimationCurve!
+    public private(set) var animationCurve: UIView.AnimationCurve!
     public private(set) var animationDuration: Double!
     public private(set) var isLocal: Bool!
     public var keyboardHeight: CGFloat {
@@ -32,12 +32,12 @@ public class KeyboardSpyInfo: NSObject {
     
     init(notification: Notification) {
         let userInfo = notification.userInfo!
-        beginFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-        endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        animationCurve = UIViewAnimationCurve.init(rawValue: userInfo[UIKeyboardAnimationCurveUserInfoKey] as! Int)
-        animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
+        beginFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        endFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        animationCurve = UIView.AnimationCurve.init(rawValue: userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as! Int)
+        animationDuration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double)
         if #available(iOS 9.0, *) {
-            isLocal = userInfo[UIKeyboardIsLocalUserInfoKey] as! Bool
+            isLocal = (userInfo[UIResponder.keyboardIsLocalUserInfoKey] as! Bool)
         } else {
             isLocal = true
         }
